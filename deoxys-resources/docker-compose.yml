@@ -1,0 +1,77 @@
+version: "3"
+services:
+#  deoxys-merchant-qr-services:
+#    image: com.gcs.deoxys/deoxys-merchant-qr-services:1.0.0-SNAPSHOT
+#    deploy:
+#      replicas: 1
+#      resources:
+#        limits:
+#          cpus: "0.50"
+#          memory: 1G
+#      restart_policy:
+#        condition: on-failure
+#    ports:
+#      - "49500:8090"
+#    networks:
+#      - deoxys
+#  deoxys-merchant-services:
+#    image: com.gcs.deoxys/deoxys-merchant-services:1.0.0-SNAPSHOT
+#    deploy:
+#      replicas: 1
+#      resources:
+#        limits:
+#          cpus: "0.50"
+#          memory: 1G
+#      restart_policy:
+#        condition: on-failure
+#    ports:
+#      - "49501:8090"
+#    networks:
+#      - deoxys
+#  deoxys-notification-services:
+#    image: com.gcs.deoxys/deoxys-notification-services:1.0.0-SNAPSHOT
+#    deploy:
+#      replicas: 1
+#      resources:
+#        limits:
+#          cpus: "0.50"
+#          memory: 1G
+#      restart_policy:
+#        condition: on-failure
+#    ports:
+#      - "49502:8090"
+#    networks:
+#      - deoxys
+  deoxys-merchant-management-portal:
+    image: 10.225.192.77:5000/com.gcs.deoxys/deoxys-merchant-management-portal:0.1.6-SNAPSHOT
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "49503:8080"
+    volumes:
+      - /Users/jsanchez/IdeaProjects/deoxys/deoxys-resources/docker/deoxys-merchant-management-portal/environment.js:/usr/src/app/merchant-portal-web/environment.js
+      - /Users/jsanchez/IdeaProjects/deoxys/deoxys-resources/docker/deoxys-merchant-management-portal/server.js:/usr/src/app/server.js
+    networks:
+      - deoxys
+#  deoxys-merchant-portal:
+#    image: com.gcs.deoxys/deoxys-merchant-portal:1.0.0-SNAPSHOT
+#    deploy:
+#      replicas: 1
+#      resources:
+#        limits:
+#          cpus: "0.3"
+#          memory: 1G
+#      restart_policy:
+#        condition: on-failure
+#    ports:
+#      - "49504:8080"
+#    networks:
+#      - deoxys
+networks:
+  deoxys:
