@@ -1,0 +1,4 @@
+TipoRegistro,Secuencia,MID,TrxID,TipoTRX,Fecha,Hora,MontoTotal,ITBIS,MDR,MDRAmount,ComisionAZUL,ComisionGCS,ComisionBanco,ComisonOtra,MontoPagado,NoAuth
+<#list body as transactionRequest>
+    D,${transactionRequest?counter},${transactionRequest.tpn},${transactionRequest.authorizationNumber},,${transactionRequest.transactionDate?datetime?string("yyyyMMdd")},${transactionRequest.transactionDate?datetime?string("hh:mm:ss")},${transactionRequest.transactionAmount?string("0.00")},${transactionRequest.itbis?string("0.00")},0.00,0.00,0.00,0.00,0.00,0.00,${transactionRequest.creditedAmount},${transactionRequest.authorizationNumber}
+</#list>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<MERCHANTS>
+    <MERCHANT TELCO = "8" TELEPHONE="8097121410" EMAIL="chef.franmiignacio@gmail.com" TPN="TPN:10055"/>
+    <MERCHANT TELCO = "8" TELEPHONE="8096030969" EMAIL="juarezvictorcastillo@gmail.com" TPN="TPN:10054"/>
+    <MERCHANT TELCO = "8" TELEPHONE="8097026886" EMAIL="cajavier@bpd.com.do" TPN="TPN:10052"/>
+    <MERCHANT TELCO = "8" TELEPHONE="8098691517" EMAIL="fufulalashop@gmail.com" TPN="TPN:10059"/>
+    <MERCHANT TELCO = "8" TELEPHONE="8296160884" EMAIL="daniel@paulinorosario.com" TPN="TPN:10060"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8098851194" EMAIL="fact52@gmail.com" TPN="TPN:10061"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8094813434" EMAIL="sharinnegomez@hotmail.com" TPN="TPN:10063"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8297154321" EMAIL="npozo@vipcateringgourmet.com" TPN="TPN:10064"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8096046797" EMAIL="a.santos@decobuffet.com" TPN="TPN:10062"/>
+    <MERCHANT TELCO = "8" TELEPHONE="8099129143" EMAIL="carlosgarden@grupogarso.com" TPN="TPN:10065"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8099065959" EMAIL="info.churrikosrd@gmail.com" TPN="TPN:10066"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8293420877" EMAIL="guayaito@gmail.com" TPN="TPN:10067"/>
+    <MERCHANT TELCO = "2" TELEPHONE="8096692870" EMAIL="nperez@paletasmorelia.do" TPN="TPN:10068"/>
+</MERCHANTS>

@@ -1,0 +1,123 @@
+import se.transmode.gradle.plugins.docker.DockerTask
+
+plugins {
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id 'maven'
+    id 'net.ltgt.apt' version '0.8'
+}
+
+version = '1.1.0-SNAPSHOT'
+
+ext {
+    moduleGroup  = "com.gcs.deoxys"
+    version = version
+    moduleName = "deoxys-notification-services"
+}
+
+build  {
+    print("PROJECT DIR : $projectDir")
+    copy {
+
+        from file("$projectDir/src/main/resources/persistence.xml")
+        into file("$buildDir/resources/main/META-INF")
+    }
+}
+
+
+
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //Persistence
+    compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.0.CR1'
+
+    compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+
+    //Spring
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
+
+
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
+    compile 'org.projectlombok:lombok:1.14.8'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+
+    //Camel
+    compile group: 'org.apache.camel', name: 'camel-core', version: '3.0.0-M4'
+    compile group: 'org.apache.camel', name: 'camel-spring-boot-starter', version: '3.0.0-M4'
+    compile group: 'org.apache.camel', name: 'camel-jpa', version: '3.0.0-M4'
+    compile group: 'org.apache.camel', name: 'camel-http4', version: '3.0.0-M4'
+    compile group: 'org.apache.camel', name: 'camel-gson', version: '3.0.0-M4'
+    compile group: 'org.apache.camel', name: 'camel-quartz2', version: '3.0.0-M4'
+    compile group: 'org.apache.camel', name: 'camel-freemarker', version: '3.0.0-M4'
+}
+
+task dockerfile(dependsOn:['build'],type: DockerTask) {
+    doFirst {
+        registry String.format("%s:%s", "${registryHost}", "${registryPort}")
+        tag String.format("%s/%s/%s", registry, moduleGroup, moduleName)
+        def command = new ArrayList()
+        command.add("java")
+        command.add("-jar")
+        command.add("/usr/src/$applicationName-$version"+".jar")
+        baseImage            "openjdk:8-jdk-alpine"
+        workingDir           "/usr/src"
+        applicationName      "$project.name"
+        addFile              "$buildDir/libs/$applicationName-$version"+".jar","/usr/src/"
+        //Agregar keystore?
+        volume               "/usr/src/"
+        exposePort           8090
+        defaultCommand       command
+    }
+    doLast {
+        File file = new File("$buildDir/docker/Dockerfile")
+        if(file.exists()) {
+            def lines = file.readLines()
+            if(!lines.get(2).contains("USER")) lines.add(2,"USER $containerUser ")
+            new File("$buildDir/docker",'Dockerfile').withWriter('utf-8') { writer ->
+                lines.each { writer.writeLine it }
+            }
+        }
+    }
+    doLast {
+        if(new Boolean("${pushEnable}")) {
+            println "docker push ${tag}".execute().getText()
+        }
+    }
+
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            switch ("${codeIntention}") {
+                case "release":
+                    repository(url: "${nexusUrl}/content/repositories/releases") {
+                        authentication(userName: "${nexusUsername}", password: "${nexusPassword}")
+                    }
+                    break;
+                case "snapshot":
+                    repository(url: "${nexusUrl}/content/repositories/snapshots") {
+                        authentication(userName: "${nexusUsername}", password: "${nexusPassword}")
+                    }
+                    break;
+            }
+        }
+    }
+}
