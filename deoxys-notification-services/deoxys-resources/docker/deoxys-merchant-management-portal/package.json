@@ -1,0 +1,16 @@
+{
+  "name": "merchant-portal-web",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "Jesus Sanchez <jsanchez@gcs-systems.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "connect": "^3.6.6",
+    "express": "^4.16.1",
+    "serve-static": "^1.13.2"
+  },
+  "homepage": "./merchantportal/"
+}

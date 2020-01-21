@@ -1,0 +1,27 @@
+{
+  "ticket": {
+    "baseball": {
+      "section": {
+        "name": "AA12",
+        "availableSeats": 6,
+        "seats": [
+          {
+            "key": "H",
+            "value": "[1-3]"
+          },
+          {
+            "key": "J",
+            "value": "[1-1]"
+          },
+          {
+            "key": "L",
+            "value": "[1-2]"
+          }
+        ],
+        "id": 59,
+        "location": "unknown",
+        "maxAvailableContiguousSeats": 3
+      }
+    }
+  }
+}
